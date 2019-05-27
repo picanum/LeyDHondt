@@ -2,7 +2,14 @@
 Pequeña función para obtener el reparto de escaños según la Ley D'Hondt a partir de un vector de votos:
 
 ```R
-dhondt <- function(x, nombres = NULL, escanos, umbral){
+dhondt <- function(x,   #x = vector donde cada elemento es el número de votos a una candidatura
+    nombres = NULL,     #nombres = vector donde el i-ésimo elemento es el nombre de la candidatura que ha recibido
+                        #          el nº de votos indicados en el i-ésimo elemento de x.
+                        #          Si no se especifica, se cogen los nombres del vector x.
+    escanos,            #escanos = número de escaños a repartir
+    umbral              #umbral = número entre 0 y 1 que indica el porcentaje mínimo que una candidatura ha de tener
+                        #         para que pueda considerarse adjudicataria de escaños. P. ej. si es 5% -> umbral = 0.05
+    ){
     x <- x[which(x/sum(x) >= umbral)]
     if(!is.null(nombres)) nombres <- nombres[which(x/sum(x) >= umbral)]
     temp1 <- sort(sapply(1:escanos, function(i) x/i), decreasing=T)[1:escanos]
