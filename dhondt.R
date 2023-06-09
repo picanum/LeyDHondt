@@ -1,6 +1,7 @@
 dhondt <- function(x, nombres = NULL, escanos, umbral){
-    x <- x[which(x/sum(x) >= umbral)]
-    if(!is.null(nombres)) nombres <- nombres[which(x/sum(x) >= umbral)]
+    partidos_que_entran <- which(x/sum(x) >= umbral)
+    x <- x[partidos_que_entran]
+    if(!is.null(nombres)) nombres <- nombres[partidos_que_entran]
     temp1 <- sort(sapply(1:escanos, function(i) x/i), decreasing=T)[1:escanos]
     mat <- matrix(sapply(1:escanos, function(i) x/i), ncol = length(x), byrow=T)
     if(is.null(nombres)){
